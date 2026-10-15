@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Silicon vs sim diff</title><style>
+:root{--bg:#0f1217;--fg:#e8ecf2;--mut:#93a0b4;--card:#171c25;--line:#2a3140}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:26px 16px 60px}h1{font-size:25px;margin:0 0 4px}h2{font-size:17px;margin:24px 0 8px}.sub{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;overflow-x:auto}pre{margin:6px 0 0;font:12px Consolas,monospace;color:#b9f0cd;white-space:pre}
+table{width:100%;border-collapse:collapse;background:var(--card);font-size:13.5px}td,th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.v{display:inline-block;background:#b3261e;color:#fff;border-radius:6px;padding:1px 10px;font-weight:700}
+</style></head><body><main>
+<h1>Same firmware on silicon and in simulation: what actually differs</h1>
+<div class="sub">Synthetic captures in real formats (sim --ascii, USB-serial logger, logic-analyzer CSV). Two planted sim bugs: TIM3 prescaler off by one (PSC 8399), relay GPIO 4 ms late.
+Unofficial prototype by Kushagra Pratap Singh, not affiliated with Simantic.</div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><b>sim output</b><pre>[0.013823s] (usart2) boot v1.2 reset=POR..
+[0.500891s] (usart2) DO=6.09..
+[1.000002s] (heartbeat) HIGH
+[1.000950s] (usart2) DO=5.69..
+[1.501010s] (usart2) DO=5.92..
+[2.000062s] (heartbeat) LOW
+[2.000744s] (usart2) T=20.6..
+[2.001526s] (usart2) DO=5.12..
+[2.501129s] (usart2) DO=5.07..</pre></div>
+<div class="card"><b>silicon: USB-serial logger</b><pre>12:00:00.266806 RX &#x27;boot v1.2 reset=POR\r\n&#x27;
+12:00:00.755744 RX &#x27;DO=6.09\r\n&#x27;
+12:00:01.257515 RX &#x27;DO=5.69\r\n&#x27;
+12:00:01.756364 RX &#x27;DO=5.92\r\n&#x27;
+12:00:02.258809 RX &#x27;T=20.6\r\n&#x27;
+12:00:02.258810 RX &#x27;DO=5.12\r\n&#x27;
+12:00:02.758566 RX &#x27;DO=5.07\r\n&#x27;
+12:00:03.252453 RX &#x27;DO=4.28\r\n&#x27;
+12:00:03.257133 RX &#x27;AERATOR ON\r\n&#x27;</pre></div>
+<div class="card"><b>silicon: logic analyzer</b><pre>Time [s],Channel 4,Channel 13
+1.734098556,0,1
+2.734196500,0,0
+3.734171879,0,1
+3.734410124,1,1
+4.734270765,1,0
+5.734247972,1,1
+6.734344851,1,0
+7.734321037,1,1</pre></div>
+</div>
+<h2>Time fit (expected differences removed) → <span class="v">MISMATCH</span></h2>
+<div class="sub">Board crystal fitted at +37.0 ppm (within ±50: not a finding). Each capture gets its own offset. Logger latency and analyzer jitter set the tolerances.</div>
+<div style="overflow-x:auto;margin-top:8px"><table><tr><th>stream</th><th>capture</th><th>rate vs sim (ppm)</th><th>matched events</th></tr><tr><td>uart:DO</td><td>logger</td><td>-77.4</td><td>239</td></tr><tr><td>uart:T</td><td>logger</td><td>+31.3</td><td>59</td></tr><tr><td>uart:AERATOR</td><td>logger</td><td>-63.4</td><td>7</td></tr><tr><td>gpio13</td><td>la</td><td>+37.0</td><td>119</td></tr><tr><td>gpio4</td><td>la</td><td>-82.0</td><td>7</td></tr></table></div>
+<h2>Findings</h2><div style="overflow-x:auto"><table><tr><th>category</th><th>finding</th><th>evidence</th></tr><tr><td><b>RATE</b></td><td>uart:DO runs -114 ppm vs the rest of the device (239 events)</td><td></td></tr><tr><td><b>TIMING</b></td><td>7 la events off by more than 0.2 ms (worst -13.05 ms: 1)</td><td>sim 75.513288s gpio4 1</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR ON&#x27; 2.36 ms before gpio4 goes 1</td><td>sim 3.002299s</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR ON&#x27; 2.36 ms before gpio4 goes 1</td><td>sim 53.508311s</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR ON&#x27; 2.36 ms before gpio4 goes 1</td><td>sim 58.508906s</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR ON&#x27; 2.36 ms before gpio4 goes 1</td><td>sim 75.510930s</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR OFF&#x27; 2.27 ms before gpio4 goes 0</td><td>sim 15.503874s</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR OFF&#x27; 2.27 ms before gpio4 goes 0</td><td>sim 55.508636s</td></tr><tr><td><b>CAUSALITY</b></td><td>sim prints &#x27;AERATOR OFF&#x27; 2.27 ms before gpio4 goes 0</td><td>sim 62.009409s</td></tr><tr><td><b>ORDER</b></td><td>2 lines print in a different order (TIM3 drifts past TIM4)</td><td></td></tr></table></div>
+<h2>Negative control: relay threshold inverted in the firmware → SAME_FAILURE</h2>
+<div class="card" style="font-size:14px">silicon first failure: <code>(&#x27;RELAY&#x27;, 0, &#x27;after DO=6.09 expected no change, got AERATOR ON&#x27;)</code><br>sim first failure: <code>(&#x27;RELAY&#x27;, 0, &#x27;after DO=6.09 expected no change, got AERATOR ON&#x27;)</code></div>
+<h2>Traceability</h2><div class="card" style="font-size:14px">firmware 361bc7b3df4796d4 · target STM32F401RE (board rev B) · sim 0.6.x (model under test) · crystal tolerance ±50 ppm ·
+not exercised in this run: none</div>
+<h2>Benchmark</h2><div style="overflow-x:auto"><table><tr><th>set</th><th>clean runs flagged: exact diff</th><th>payload-only</th><th>timing, no drift fit</th><th>simdiff</th><th>sim bugs named (simdiff)</th><th>negative controls reproduced</th></tr><tr><td>dev (300 runs)</td><td>103/103</td><td>48/103</td><td>100/103</td><td><b>0/103</b></td><td><b>195/197</b></td><td>24/24</td></tr><tr><td>held-out, first run (300)</td><td>110/110</td><td>40/110</td><td>101/110</td><td><b>0/110</b></td><td><b>171/190</b></td><td>23/23</td></tr></table></div>
+</main></body></html>

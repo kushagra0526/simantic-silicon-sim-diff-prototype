@@ -1,0 +1,430 @@
+{
+ "split": "heldout",
+ "cases": 300,
+ "clean": 110,
+ "by_bug": {
+  "dropped_irq": {
+   "exact": [
+    20,
+    20
+   ],
+   "payload": [
+    20,
+    20
+   ],
+   "timing": [
+    20,
+    20
+   ],
+   "simdiff": [
+    20,
+    20
+   ]
+  },
+  "fp_rounding": {
+   "exact": [
+    23,
+    23
+   ],
+   "payload": [
+    23,
+    23
+   ],
+   "timing": [
+    23,
+    23
+   ],
+   "simdiff": [
+    23,
+    23
+   ]
+  },
+  "gpio_slow": {
+   "exact": [
+    16,
+    16
+   ],
+   "payload": [
+    7,
+    16
+   ],
+   "timing": [
+    14,
+    16
+   ],
+   "simdiff": [
+    16,
+    16
+   ]
+  },
+  "irq_priority": {
+   "exact": [
+    19,
+    19
+   ],
+   "payload": [
+    19,
+    19
+   ],
+   "timing": [
+    19,
+    19
+   ],
+   "simdiff": [
+    19,
+    19
+   ]
+  },
+  "nack_unmodeled": {
+   "exact": [
+    26,
+    26
+   ],
+   "payload": [
+    26,
+    26
+   ],
+   "timing": [
+    26,
+    26
+   ],
+   "simdiff": [
+    26,
+    26
+   ]
+  },
+  "pll": {
+   "exact": [
+    13,
+    13
+   ],
+   "payload": [
+    11,
+    13
+   ],
+   "timing": [
+    13,
+    13
+   ],
+   "simdiff": [
+    13,
+    13
+   ]
+  },
+  "prescaler": {
+   "exact": [
+    62,
+    62
+   ],
+   "payload": [
+    59,
+    62
+   ],
+   "timing": [
+    61,
+    62
+   ],
+   "simdiff": [
+    43,
+    62
+   ]
+  },
+  "reset_flags": {
+   "exact": [
+    11,
+    11
+   ],
+   "payload": [
+    11,
+    11
+   ],
+   "timing": [
+    11,
+    11
+   ],
+   "simdiff": [
+    11,
+    11
+   ]
+  }
+ },
+ "caught": {
+  "exact": [
+   190,
+   190
+  ],
+  "payload": [
+   176,
+   190
+  ],
+  "timing": [
+   187,
+   190
+  ],
+  "simdiff": [
+   171,
+   190
+  ]
+ },
+ "clean_flagged": {
+  "exact": 110,
+  "payload": 40,
+  "timing": 101,
+  "simdiff": 0
+ },
+ "simdiff_wrong_category_cases": 16,
+ "negative_controls_faithful_sim": {
+  "SAME_FAILURE": 23
+ },
+ "negative_controls_buggy_sim": {
+  "SAME_FAILURE": 45,
+  "DIFFERENT_FAILURE": 1
+ },
+ "misses": [
+  {
+   "seed": 7007,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7010,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7019,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7027,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7040,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7111,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": "hardfault",
+   "got": []
+  },
+  {
+   "seed": 7139,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7146,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7158,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": "hardfault",
+   "got": []
+  },
+  {
+   "seed": 7163,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7203,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": "wrong_addr",
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7216,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": "wrong_addr",
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7220,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "EXTRA",
+    "MISSING",
+    "ORDER",
+    "TIMING",
+    "VALUE"
+   ]
+  },
+  {
+   "seed": 7236,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7253,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7258,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7259,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": "hardfault",
+   "got": [
+    "CLOCK",
+    "ORDER",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7264,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "hb",
+    "psc": 4199
+   },
+   "mutant": "hardfault",
+   "got": [
+    "CLOCK",
+    "TIMING"
+   ]
+  },
+  {
+   "seed": 7293,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 47999
+   },
+   "mutant": null,
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  }
+ ],
+ "false_alarms": []
+}
