@@ -1,0 +1,211 @@
+{
+ "split": "dev",
+ "cases": 300,
+ "clean": 103,
+ "by_bug": {
+  "dropped_irq": {
+   "exact": [
+    21,
+    21
+   ],
+   "payload": [
+    21,
+    21
+   ],
+   "timing": [
+    21,
+    21
+   ],
+   "simdiff": [
+    21,
+    21
+   ]
+  },
+  "fp_rounding": {
+   "exact": [
+    21,
+    21
+   ],
+   "payload": [
+    21,
+    21
+   ],
+   "timing": [
+    21,
+    21
+   ],
+   "simdiff": [
+    21,
+    21
+   ]
+  },
+  "gpio_slow": {
+   "exact": [
+    22,
+    22
+   ],
+   "payload": [
+    13,
+    22
+   ],
+   "timing": [
+    21,
+    22
+   ],
+   "simdiff": [
+    22,
+    22
+   ]
+  },
+  "irq_priority": {
+   "exact": [
+    25,
+    25
+   ],
+   "payload": [
+    25,
+    25
+   ],
+   "timing": [
+    25,
+    25
+   ],
+   "simdiff": [
+    25,
+    25
+   ]
+  },
+  "nack_unmodeled": {
+   "exact": [
+    20,
+    20
+   ],
+   "payload": [
+    20,
+    20
+   ],
+   "timing": [
+    20,
+    20
+   ],
+   "simdiff": [
+    20,
+    20
+   ]
+  },
+  "pll": {
+   "exact": [
+    19,
+    19
+   ],
+   "payload": [
+    19,
+    19
+   ],
+   "timing": [
+    19,
+    19
+   ],
+   "simdiff": [
+    19,
+    19
+   ]
+  },
+  "prescaler": {
+   "exact": [
+    45,
+    45
+   ],
+   "payload": [
+    45,
+    45
+   ],
+   "timing": [
+    45,
+    45
+   ],
+   "simdiff": [
+    43,
+    45
+   ]
+  },
+  "reset_flags": {
+   "exact": [
+    24,
+    24
+   ],
+   "payload": [
+    24,
+    24
+   ],
+   "timing": [
+    24,
+    24
+   ],
+   "simdiff": [
+    24,
+    24
+   ]
+  }
+ },
+ "caught": {
+  "exact": [
+   197,
+   197
+  ],
+  "payload": [
+   188,
+   197
+  ],
+  "timing": [
+   196,
+   197
+  ],
+  "simdiff": [
+   195,
+   197
+  ]
+ },
+ "clean_flagged": {
+  "exact": 103,
+  "payload": 48,
+  "timing": 100,
+  "simdiff": 0
+ },
+ "simdiff_wrong_category_cases": 8,
+ "negative_controls_faithful_sim": {
+  "SAME_FAILURE": 24
+ },
+ "negative_controls_buggy_sim": {
+  "SAME_FAILURE": 33,
+  "DIFFERENT_FAILURE": 6
+ },
+ "misses": [
+  {
+   "seed": 52,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 8399
+   },
+   "mutant": "hardfault",
+   "got": [
+    "ORDER"
+   ]
+  },
+  {
+   "seed": 131,
+   "bug": {
+    "kind": "prescaler",
+    "timer": "poll",
+    "psc": 8399
+   },
+   "mutant": "hardfault",
+   "got": [
+    "ORDER",
+    "TIMING"
+   ]
+  }
+ ],
+ "false_alarms": []
+}
